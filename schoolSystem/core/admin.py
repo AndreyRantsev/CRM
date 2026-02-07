@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import User
+from .models import (User, Teacher, Parent, Student, SchoolClass, FAQ, Message)
 from django.contrib.auth.admin import UserAdmin as DjangoUserAdmin
 
 # Register your models here.
@@ -11,4 +11,9 @@ class UserAdmin(DjangoUserAdmin):
         ('Роль', {'fields': ('role',)}),
     )
 
-
+admin.site.register(Teacher)
+admin.site.register(Parent)
+admin.site.register(Student)
+admin.site.register(SchoolClass)
+admin.site.register(FAQ)
+admin.site.register(Message)
