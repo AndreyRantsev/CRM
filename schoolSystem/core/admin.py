@@ -8,7 +8,7 @@ from django.contrib.auth.admin import UserAdmin as DjangoUserAdmin
 class UserAdmin(DjangoUserAdmin):
     list_display = ('username', 'roles')
     fieldsets = DjangoUserAdmin.fieldsets + (
-        ('Роль', {'fields': ('role',)}),
+        ('Роль', {'fields': ('roles',)}),
     )
 
 admin.site.register(Teacher)
