@@ -1,5 +1,3 @@
-from tkinter import CASCADE
-from xml.dom.minidom import Document
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
@@ -32,12 +30,16 @@ class Teacher(models.Model):
         return f"{self.user.username} {self.teacherClass.name}"
 
 class Student(models.Model):
-    name =  models.OneToOneField("User", on_delete=models.CASCADE)
-    studentClass = models.OneToOneField("SchoolClass", on_delete=models.CASCADE)
+    user =  models.OneToOneField("User", on_delete=models.CASCADE)
+    studentClass = models.ForeignKey ("SchoolClass", on_delete=models.CASCADE)
+    def __str__(self) -> str:
+        return f"{self.user.username} {self.studentClass.name}"
 
 class Parent(models.Model):
-    name =  models.OneToOneField("User", on_delete=models.CASCADE)
+    user =  models.OneToOneField("User", on_delete=models.CASCADE)
     children = models.ManyToManyField("Student")
+    def __str__(self) -> str:
+        return f"{self.user.username}"
 
 class Message(models.Model):
     author = models.ForeignKey("User", on_delete=models.CASCADE)
