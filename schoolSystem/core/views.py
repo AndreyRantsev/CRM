@@ -1,4 +1,3 @@
-from email import message
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .models import Teacher, Parent, Student, Message
@@ -7,10 +6,16 @@ from .models import Teacher, Parent, Student, Message
 
 @login_required
 def my_view(request):
-    if request.user.role == "teacher":
-        teacherData = Teacher.objects.get(request.user)
-        messages = Message.objects.filter() # Указать параметры для фильтрации
-        
-
+    if request.user.roles == "teacher":
+        teacherData = Teacher.objects.get(user = request.user)
+        # messages = Message.objects.filter() # Указать параметры для фильтрации
+        return render(
+        request,
+        "core/teacher.html",
+        {
+            "school_class": teacherData.teacherClass
+        }
+        )
+    return redirect("/")
 
 
