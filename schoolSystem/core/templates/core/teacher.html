@@ -7,7 +7,13 @@
 </head>
 <body>
     <h2>Класс {{school_class.name}}</h2>
-        <form method="post" action="{%url 'logout'%}">
+    {% for message in messages %}
+        <h3>{{message.title}}</h3>
+        <p>{{message.text}}</p>
+        <p>{{message.author}}</p>
+        <p>{{message.time}}</p>
+    {%endfor%}
+    <form method="post" action="{%url 'logout'%}">
         {% csrf_token %}
         <button type="submit">Выйти</button>
     </form>
