@@ -10,7 +10,7 @@
     <h1>Дети:</h1>
     <ul>
         {% for child in children %}
-            <h3>{{child.user.username}} - {{child.studentClass.name}}</h3>
+            <li>{{child.user.username}} - {{child.studentClass.name}}</li>
         {%endfor%}
     </ul>
     {% for message in messages %}

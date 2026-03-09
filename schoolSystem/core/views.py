@@ -3,7 +3,7 @@ from urllib import request
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from .models import SchoolClass, Teacher, Parent, Student, Message
+from .models import SchoolClass, Teacher, Parent, Student, Message, FAQ
 from django.db.models import Q
 
 # Create your views here.
@@ -15,6 +15,7 @@ def my_view(request) -> HttpResponse | HttpResponseRedirect:
         teacherData = Teacher.objects.get(user = request.user)
         messages = Message.objects.filter(Q(SchoolClass = teacherData.teacherClass)|Q(SchoolClass__isnull=True))
 
+        faq = FAQ.objects.all()
 
         return render(
         request,
@@ -22,7 +23,8 @@ def my_view(request) -> HttpResponse | HttpResponseRedirect:
         {
             "name": teacherData.user.username,
             "school_class": teacherData.teacherClass,
-            "messages": messages
+            "messages": messages,
+            "faqs": faq
         }
         )
     
