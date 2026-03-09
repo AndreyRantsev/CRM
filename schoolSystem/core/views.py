@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .models import SchoolClass, Teacher, Parent, Student, Message
+from django.db.models import Q
 
 # Create your views here.
 
@@ -8,7 +9,7 @@ from .models import SchoolClass, Teacher, Parent, Student, Message
 def my_view(request):
     if request.user.roles == "teacher":
         teacherData = Teacher.objects.get(user = request.user)
-        messages = Message.objects.filter(SchoolClass = teacherData.teacherClass)
+        messages = Message.objects.filter(Q(SchoolClass = teacherData.teacherClass)|Q(SchoolClass__isnull=True))
         return render(
         request,
         "core/teacher.html",
