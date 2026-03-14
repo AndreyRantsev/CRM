@@ -6,13 +6,7 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>Родитель {{name}}</h1>
-    <h1>Дети:</h1>
-    <ul>
-        {% for child in children %}
-            <li>{{child.user.username}} - {{child.studentClass.name}}</li>
-        {%endfor%}
-    </ul>
+    <h1>Администратор</h1>
     {% for message in messages %}
         <h3>{{message.title}}</h3>
         <p>{{message.text}}</p>

@@ -14,7 +14,8 @@
         <p>{{message.author}}</p>
         <p>{{message.time}}</p>
     {%endfor%}
-        <ul>
+    <h2>Вопрос - Ответ</h2>
+    <ul>
         {% for faq in faqs %}
             <li>{{faq.question}} - {{faq.answer}}</li>
         {%endfor%}

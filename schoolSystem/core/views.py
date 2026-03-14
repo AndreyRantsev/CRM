@@ -59,6 +59,17 @@ def my_view(request) -> HttpResponse | HttpResponseRedirect:
                 "faqs": faq
             }
             )
+    if request.user.roles == "admin":
+        messages = Message.objects.all()
+        faq = FAQ.objects.all()
+        return render(
+            request,
+            "core/admin-template.html",
+            {   
+                "messages": messages,
+                "faqs": faq
+            }
+        )
+    return redirect("login")
 
-    return redirect("/")
-
+    
