@@ -32,26 +32,31 @@ def my_view(request) -> HttpResponse | HttpResponseRedirect:
     if request.user.roles == "student":
         studentData = Student.objects.get(user = request.user)
         messages = Message.objects.filter(Q(SchoolClass = studentData.studentClass)|Q(SchoolClass__isnull=True))
+        faq = FAQ.objects.all()
+
         return render(
             request,
             "core/student.html",
             {   
                 "name": studentData.user.username,
                 "school_class": studentData.studentClass,
-                "messages": messages
+                "messages": messages,
+                "faqs": faq
             }
             )
     if request.user.roles == "parent":
         parentData = Parent.objects.get(user = request.user)
         children = parentData.children.all()
         messages = Message.objects.filter(Q(SchoolClass__student__in=children) | Q(SchoolClass__isnull=True))
+        faq = FAQ.objects.all()
         return render(
             request,
             "core/parent.html",
             {   
                 "name": parentData.user.username,
                 "children": children,
-                "messages": messages
+                "messages": messages,
+                "faqs": faq
             }
             )
 
