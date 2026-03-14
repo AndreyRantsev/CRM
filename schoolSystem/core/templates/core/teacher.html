@@ -8,6 +8,13 @@
 <body>
     <h1>Учитель {{name}}</h1>
     <h2>Класс {{school_class.name}}</h2>
+    <h2>Отправить сообщение</h2>
+    <form method="post">
+        {% csrf_token %}
+        <input type="text" name="title" placeholder="Введите заголовок" required>
+        <textarea name="text" placeholder="Введите текст" required></textarea>
+        <button type="submit">Отправить</button>
+    </form>
     {% for message in messages %}
         <h3>{{message.title}}</h3>
         <p>{{message.text}}</p>

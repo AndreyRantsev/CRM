@@ -3,7 +3,7 @@ from urllib import request
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from .models import SchoolClass, Teacher, Parent, Student, Message, FAQ
+from .models import SchoolClass, Teacher, Parent, Student, Message, FAQ, User
 from django.db.models import Q
 
 # Create your views here.
@@ -13,8 +13,19 @@ def my_view(request) -> HttpResponse | HttpResponseRedirect:
 
     if request.user.roles == "teacher":
         teacherData = Teacher.objects.get(user = request.user)
-        messages = Message.objects.filter(Q(SchoolClass = teacherData.teacherClass)|Q(SchoolClass__isnull=True))
 
+        if request.method == "POST":
+            title = request.POST.get("title")
+            text = request.POST.get("text")
+            Message.objects.create(
+                author = request.user,
+                title = title,
+                text = text,
+                SchoolClass = teacherData.teacherClass
+            )
+            return redirect("my_view")
+        
+        messages = Message.objects.filter(Q(SchoolClass = teacherData.teacherClass)|Q(SchoolClass__isnull=True))
         faq = FAQ.objects.all()
 
         return render(
@@ -59,15 +70,36 @@ def my_view(request) -> HttpResponse | HttpResponseRedirect:
                 "faqs": faq
             }
             )
+    
     if request.user.roles == "admin":
         messages = Message.objects.all()
+
+        if request.method == "POST":
+            title = request.POST.get("title")
+            text = request.POST.get("text")
+            class_id = request.POST.get("school_class")
+            school_class = None
+
+            if class_id:
+                school_class = SchoolClass.objects.get(id = class_id)
+
+            Message.objects.create(
+                author = request.user,
+                title = title,
+                text = text,
+                SchoolClass = school_class
+            )
+            return redirect("my_view")
+        
         faq = FAQ.objects.all()
+        classes = SchoolClass.objects.all()
         return render(
             request,
             "core/admin-template.html",
             {   
                 "messages": messages,
-                "faqs": faq
+                "faqs": faq,
+                "classes": classes
             }
         )
     return redirect("login")
