@@ -74,7 +74,7 @@ def my_view(request) -> HttpResponse | HttpResponseRedirect:
     if request.user.roles == "admin":
         messages = Message.objects.all()
 
-        if request.method == "POST":
+        if request.method == "POST" and "message" in request.POST:
             title = request.POST.get("title")
             text = request.POST.get("text")
             class_id = request.POST.get("school_class")
@@ -90,6 +90,15 @@ def my_view(request) -> HttpResponse | HttpResponseRedirect:
                 SchoolClass = school_class
             )
             return redirect("my_view")
+        
+        if request.method == "POST" and "faq" in request.POST:
+            question = request.POST.get("question")
+            answer = request.POST.get("answer")
+
+            FAQ.objects.create(
+                question = question,
+                answer = answer
+            )
         
         faq = FAQ.objects.all()
         classes = SchoolClass.objects.all()

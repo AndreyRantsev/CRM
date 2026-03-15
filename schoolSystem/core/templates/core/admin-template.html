@@ -7,6 +7,8 @@
 </head>
 <body>
     <h1>Администратор</h1>
+
+    <h2>Отправить сообщение</h2>
     <form method="post">
         {% csrf_token %}
         <input type="text" name="title" placeholder="Введите заголовок" required>
@@ -16,7 +18,7 @@
                 <option value="{{class.id}}">{{class.name}}</option>
             {%endfor%}
         </select>
-        <button type="submit">Отправить</button>
+        <button type="submit" name="message">Отправить</button>
     </form>
 
     {% for message in messages %}
@@ -25,6 +27,14 @@
         <p>{{message.author}}</p>
         <p>{{message.time}}</p>
     {%endfor%}
+
+    <h2>Создать FAQ</h2>
+    <form method="post">    
+        {% csrf_token %}
+        <input type="text" name="question" placeholder="Введите вопрос" required>
+        <textarea name="answer" placeholder="Введите ответ" required></textarea>
+        <button type="submit" name="faq">Отправить</button>
+    </form>
 
     <h2>Вопрос - Ответ</h2>
     <ul>
