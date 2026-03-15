@@ -1,35 +1,74 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+<meta charset="UTF-8">
+<title>Учитель</title>
+{%load static%}
+<link rel="stylesheet" href="{%static 'css/style.css'%}">
 </head>
+
 <body>
-    <h1>Учитель {{name}}</h1>
-    <h2>Класс {{school_class.name}}</h2>
-    <h2>Отправить сообщение</h2>
-    <form method="post">
-        {% csrf_token %}
-        <input type="text" name="title" placeholder="Введите заголовок" required>
-        <textarea name="text" placeholder="Введите текст" required></textarea>
-        <button type="submit">Отправить</button>
-    </form>
-    {% for message in messages %}
-        <h3>{{message.title}}</h3>
-        <p>{{message.text}}</p>
-        <p>{{message.author}}</p>
-        <p>{{message.time}}</p>
-    {%endfor%}
-    <h2>Вопрос - Ответ</h2>
-    <ul>
-        {% for faq in faqs %}
-            <li>{{faq.question}} - {{faq.answer}}</li>
-        {%endfor%}
-    </ul>
-    <form method="post" action="{%url 'logout'%}">
-        {% csrf_token %}
-        <button type="submit">Выйти</button>
-    </form>
+
+<div class="container">
+
+<h1>Учитель {{name}}</h1>
+<h2>Класс {{school_class.name}}</h2>
+
+<div class="card">
+
+<h2>Отправить сообщение</h2>
+
+<form method="post">
+{% csrf_token %}
+
+<input type="text" name="title" placeholder="Заголовок">
+
+<textarea name="text" placeholder="Текст"></textarea>
+
+<button type="submit">Отправить</button>
+
+</form>
+
+</div>
+
+<div class="card">
+
+<h2>Сообщения</h2>
+
+{% for message in messages %}
+
+<div class="message">
+
+<h3>{{message.title}}</h3>
+<p>{{message.text}}</p>
+<p>{{message.author}} • {{message.time}}</p>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+<div class="card">
+
+<h2>FAQ</h2>
+
+<ul class="list">
+
+{% for faq in faqs %}
+<li>{{faq.question}} — {{faq.answer}}</li>
+{% endfor %}
+
+</ul>
+
+</div>
+
+<form method="post" action="{%url 'logout'%}">
+{% csrf_token %}
+<button class="logout">Выйти</button>
+</form>
+
+</div>
+
 </body>
 </html>

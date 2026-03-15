@@ -1,17 +1,30 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+<meta charset="UTF-8">
+<title>Вход</title>
+{%load static%}
+<link rel="stylesheet" href="{%static 'css/style.css'%}">
 </head>
+
 <body>
-    <h1>Вход</h1>
-    <form method="post">
-        {% csrf_token %}
-        <input type="text" name="username">
-        <input type="password" name="password">
-        <button type="submit">Подтвердить</button>
-    </form>
+
+<div class="login-box">
+
+<h1>Вход</h1>
+
+<form method="post">
+{% csrf_token %}
+
+<input type="text" name="username" placeholder="Логин">
+
+<input type="password" name="password" placeholder="Пароль">
+
+<button type="submit">Войти</button>
+
+</form>
+
+</div>
+
 </body>
 </html>

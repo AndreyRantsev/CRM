@@ -1,33 +1,70 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+<meta charset="UTF-8">
+<title>Родитель</title>
+{%load static%}
+<link rel="stylesheet" href="{%static 'css/style.css'%}">
 </head>
+
 <body>
-    <h1>Родитель {{name}}</h1>
-    <h1>Дети:</h1>
-    <ul>
-        {% for child in children %}
-            <li>{{child.user.username}} - {{child.studentClass.name}}</li>
-        {%endfor%}
-    </ul>
-    {% for message in messages %}
-        <h3>{{message.title}}</h3>
-        <p>{{message.text}}</p>
-        <p>{{message.author}}</p>
-        <p>{{message.time}}</p>
-    {%endfor%}
-    <h2>Вопрос - Ответ</h2>
-    <ul>
-        {% for faq in faqs %}
-            <li>{{faq.question}} - {{faq.answer}}</li>
-        {%endfor%}
-    </ul>
-    <form method="post" action="{%url 'logout'%}">
-        {% csrf_token %}
-        <button type="submit">Выйти</button>
-    </form>
+
+<div class="container">
+
+<h1>Родитель {{name}}</h1>
+
+<div class="card">
+
+<h2>Дети</h2>
+
+<ul class="list children">
+
+{% for child in children %}
+<li>{{child.user.username}} <span>{{child.studentClass.name}}</span></li>
+{% endfor %}
+
+</ul>
+
+</div>
+
+<div class="card">
+
+<h2>Сообщения</h2>
+
+{% for message in messages %}
+
+<div class="message">
+
+<h3>{{message.title}}</h3>
+<p>{{message.text}}</p>
+<p>{{message.author}} • {{message.time}}</p>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+<div class="card">
+
+<h2>FAQ</h2>
+
+<ul class="list">
+
+{% for faq in faqs %}
+<li>{{faq.question}} — {{faq.answer}}</li>
+{% endfor %}
+
+</ul>
+
+</div>
+
+<form method="post" action="{%url 'logout'%}">
+{% csrf_token %}
+<button class="logout">Выйти</button>
+</form>
+
+</div>
+
 </body>
 </html>
